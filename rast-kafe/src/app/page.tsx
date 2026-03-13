@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Coffee, Zap, Cake, Sandwich } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import Header from '@/components/Header';
 
 type Product = {
   id: string;
@@ -67,32 +68,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-zinc-950 pb-20">
-      <header className="sticky top-0 z-50 glass">
-        <div className="flex items-center justify-between px-4 py-3">
-          <h1 className="text-3xl font-bold tracking-[0.3em] text-rast-neon neon-text">RAST</h1>
-          <button className="p-2 rounded-full hover:bg-white/10 transition-colors">
-            <Search className="w-6 h-6 text-zinc-400" />
-          </button>
-        </div>
-        
-        <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-          {categories.map(category => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`
-                flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300
-                ${selectedCategory === category 
-                  ? 'bg-rast-neon text-black neon-glow' 
-                  : 'bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-zinc-200'}
-              `}
-            >
-              {categoryIcons[category]}
-              {category}
-            </button>
-          ))}
-        </div>
-      </header>
+      <Header />
 
       <main className="px-4 pt-4">
         {products.length === 0 ? (
