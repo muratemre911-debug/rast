@@ -61,7 +61,7 @@ export default function Home() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#e67e22] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#B33F2E] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -79,7 +79,7 @@ export default function Home() {
               className={`
                 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all
                 ${selectedCategory === category 
-                  ? 'bg-[#e67e22] text-white' 
+                  ? 'bg-[#B33F2E] text-white' 
                   : 'bg-[#333] text-zinc-400 hover:bg-[#444]'}
               `}
             >
@@ -128,7 +128,7 @@ export default function Home() {
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-zinc-500">{product.category}</span>
-                      <span className="text-xl font-bold text-[#e67e22]">
+                      <span className="text-xl font-bold text-[#B33F2E]">
                         ₺{product.price}
                       </span>
                     </div>
