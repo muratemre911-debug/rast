@@ -2,14 +2,14 @@
 
 @theme {
   --color-rast-neon: #FF8C00;
-  --color-rast-neon-glow: rgba(255, 140, 0, 0.5);
-  --color-rast-bg: #09090b;
-  --color-rast-card: rgba(255, 255, 255, 0.05);
+  --color-rast-accent: #e67e22;
 }
 
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
+  --background: #1a1a1a;
+  --foreground: #f5f5f5;
+  --card-bg: #252525;
+  --card-border: #333333;
 }
 
 body {
@@ -24,26 +24,25 @@ body {
 }
 
 .glass {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--card-border);
 }
 
-.neon-glow {
-  box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
 }
 
-.neon-text {
-  color: #FF8C00;
-  text-shadow: 0 0 10px rgba(255, 140, 0, 0.5);
+.accent {
+  color: var(--color-rast-neon);
 }
 
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 15px rgba(255, 140, 0, 0.5); }
-  50% { box-shadow: 0 0 25px rgba(255, 140, 0, 0.8); }
+.bg-accent {
+  background: var(--color-rast-neon);
 }
 
-.pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+.btn-primary {
+  background: var(--color-rast-neon);
+  color: #000;
 }
