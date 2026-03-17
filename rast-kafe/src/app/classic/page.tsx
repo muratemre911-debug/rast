@@ -16,7 +16,7 @@ type Product = {
   is_available: boolean;
 };
 
-const categories = ['Tümü', 'Sıcak Kahveler', 'Soğuk İçecekler', 'Tatlılar', 'Sandviçler'];
+const categories = ['Tümü', 'Sıcak Kahve', 'Demleme Kahve', 'Soğuk Kahve', 'Sütlü Sıcak', 'Sütlü Soğuk', 'Demleme Siyah Çay', 'Bitki Çayı', 'Taze Meyve Suyu', 'Maden Suyu', 'Meşrubat', 'El Yapımı Tatlılar', 'Tost', 'Sandviç'];
 
 export default function ClassicPage() {
   const [selectedCategory, setSelectedCategory] = useState('Tümü');
@@ -32,8 +32,7 @@ export default function ClassicPage() {
       if (supabase.client) {
         const { data } = await supabase.client
           .from('products')
-          .select('*')
-          .order('category', { ascending: true });
+          .select('*');
         
         if (data) setProducts(data);
       }

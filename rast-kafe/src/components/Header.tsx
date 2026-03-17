@@ -1,7 +1,9 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import { Info } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 export default function Header() {
   const pathname = usePathname();
@@ -11,6 +13,28 @@ export default function Header() {
   const themeParam = searchParams.get('theme');
   const isClassic = pathname === '/classic' || themeParam === 'classic';
   const isInfo = pathname.includes('/info');
+
+  const [showMenuToggle, setShowMenuToggle] = useState(true);
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const fetchSettings = async () => {
+    try {
+      if (supabase.client) {
+        const { data } = await supabase.client
+          .from('settings')
+          .select('show_menu_toggle')
+          .eq('id', 'store_info')
+          .single();
+        
+        if (data) setShowMenuToggle(data.show_menu_toggle ?? true);
+      }
+    } catch (error) {
+      // default to true
+    }
+  };
 
   const handleInfoClick = () => {
     if (isClassic || themeParam === 'classic') {
@@ -24,7 +48,7 @@ export default function Header() {
     if (themeParam === 'classic') {
       router.push('/classic');
     } else {
-      router.push('/');
+      router.push('/classic');
     }
   };
 
@@ -36,18 +60,14 @@ export default function Header() {
           <h1 className="text-3xl font-serif text-[#3d2914] tracking-[0.3em]">RAST</h1>
           
           <div className="flex items-center gap-2">
-            <button
-              onClick={handleInfoClick}
-              className="p-2 rounded-full bg-[#3d2914] text-[#f4ecd8]"
-            >
-              <Info className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => router.push('/')}
-              className="px-4 py-2 rounded-full text-sm font-medium bg-[#3d2914] text-[#f4ecd8] font-serif hover:bg-[#2d1a0a] border border-[#8b7355]"
-            >
-              Modern Menü ▸
-            </button>
+            {showMenuToggle && (
+              <button
+                onClick={handleInfoClick}
+                className="p-2 rounded-full bg-[#3d2914] text-[#f4ecd8]"
+              >
+                <Info className="w-5 h-5" />
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -62,18 +82,22 @@ export default function Header() {
           <h1 className="text-4xl font-black tracking-[0.15em]">RAST</h1>
           
           <div className="flex items-center gap-2">
-            <button
-              onClick={handleInfoClick}
-              className="p-2 rounded-full bg-[#333] text-white hover:bg-[#444] border border-[#444]"
-            >
-              <Info className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => router.push('/classic')}
-              className="px-4 py-2 rounded-full text-sm font-medium bg-[#333] text-white hover:bg-[#444] border border-[#444]"
-            >
-              Klasik Menü ▸
-            </button>
+            {showMenuToggle && (
+              <>
+                <button
+                  onClick={handleInfoClick}
+                  className="p-2 rounded-full bg-[#333] text-white hover:bg-[#444] border border-[#444]"
+                >
+                  <Info className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => router.push('/classic')}
+                  className="px-4 py-2 rounded-full text-sm font-medium bg-[#333] text-white hover:bg-[#444] border border-[#444]"
+                >
+                  Klasik Menü ▸
+                </button>
+              </>
+            )}
           </div>
         </div>
       </header>

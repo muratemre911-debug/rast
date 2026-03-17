@@ -27,7 +27,7 @@ type Settings = {
   accent_color: string;
 };
 
-const categories = ['Sıcak Kahveler', 'Soğuk İçecekler', 'Tatlılar', 'Sandviçler'];
+const categories = ['Sıcak Kahve', 'Demleme Kahve', 'Soğuk Kahve', 'Sütlü Sıcak', 'Sütlü Soğuk', 'Demleme Siyah Çay', 'Bitki Çayı', 'Taze Meyve Suyu', 'Maden Suyu', 'Meşrubat', 'El Yapımı Tatlılar', 'Tost', 'Sandviç'];
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function AdminDashboard() {
     name: '',
     description: '',
     price: '',
-    category: 'Sıcak Kahveler',
+    category: 'Sıcak Kahve',
     image_url: '',
     is_available: true,
   });
@@ -54,7 +54,8 @@ export default function AdminDashboard() {
     store_description: '',
     store_image: '',
     wifi_password: '',
-    accent_color: '#B33F2E',
+    instagram: '',
+    show_menu_toggle: true,
   });
 
   const [bulkData, setBulkData] = useState({
@@ -94,8 +95,7 @@ export default function AdminDashboard() {
     try {
       const { data } = await supabase.client
         .from('products')
-        .select('*')
-        .order('category', { ascending: true });
+        .select('*');
       
       if (data) setProducts(data);
     } catch (error) {
@@ -120,7 +120,8 @@ export default function AdminDashboard() {
           store_description: data.store_description || '',
           store_image: data.store_image || '',
           wifi_password: data.wifi_password || '',
-          accent_color: data.accent_color || '#B33F2E',
+          instagram: data.instagram || '',
+          show_menu_toggle: data.show_menu_toggle ?? true,
         });
       }
     } catch (error) {
@@ -159,7 +160,7 @@ export default function AdminDashboard() {
 
     setShowModal(false);
     setEditingProduct(null);
-    setFormData({ name: '', description: '', price: '', category: 'Sıcak Kahveler', image_url: '', is_available: true });
+    setFormData({ name: '', description: '', price: '', category: 'Sıcak Kahve', image_url: '', is_available: true });
   };
 
   const handleEdit = (product: Product) => {
@@ -235,7 +236,8 @@ export default function AdminDashboard() {
         store_description: settingsData.store_description,
         store_image: settingsData.store_image,
         wifi_password: settingsData.wifi_password,
-        accent_color: settingsData.accent_color,
+        instagram: settingsData.instagram,
+        show_menu_toggle: settingsData.show_menu_toggle,
         updated_at: new Date().toISOString(),
       });
     }
@@ -290,7 +292,7 @@ export default function AdminDashboard() {
           <>
             <div className="flex gap-2 mb-4">
               <button
-                onClick={() => { setEditingProduct(null); setFormData({ name: '', description: '', price: '', category: 'Sıcak Kahveler', image_url: '', is_available: true }); setShowModal(true); }}
+                onClick={() => { setEditingProduct(null); setFormData({ name: '', description: '', price: '', category: 'Sıcak Kahve', image_url: '', is_available: true }); setShowModal(true); }}
                 className="flex-1 py-3 rounded-xl bg-[#B33F2E] text-white font-bold flex items-center justify-center gap-2"
               >
                 <Plus className="w-5 h-5" /> Ürün Ekle
@@ -402,6 +404,28 @@ export default function AdminDashboard() {
                     onChange={(e) => setSettingsData({ ...settingsData, wifi_password: e.target.value })}
                     className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
                   />
+                </div>
+
+                <div>
+                  <label className="text-xs text-zinc-500">Instagram Linki</label>
+                  <input
+                    type="url"
+                    value={settingsData.instagram}
+                    onChange={(e) => setSettingsData({ ...settingsData, instagram: e.target.value })}
+                    placeholder="https://instagram.com/..."
+                    className="w-full px-3 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-white"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between py-2">
+                  <span className="text-white">Menü Geçiş Butonu</span>
+                  <button
+                    type="button"
+                    onClick={() => setSettingsData({ ...settingsData, show_menu_toggle: !settingsData.show_menu_toggle })}
+                    className={`w-12 h-6 rounded-full p-1 transition-colors ${settingsData.show_menu_toggle ? 'bg-green-500' : 'bg-zinc-600'}`}
+                  >
+                    <div className={`w-4 h-4 rounded-full bg-white transition-transform ${settingsData.show_menu_toggle ? 'translate-x-6' : ''}`} />
+                  </button>
                 </div>
 
                 <button

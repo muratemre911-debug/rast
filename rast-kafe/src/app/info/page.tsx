@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import { Wifi } from 'lucide-react';
+import { Wifi, Instagram } from 'lucide-react';
 
 const Header = dynamic(() => import('@/components/Header'), { ssr: false });
 
@@ -13,6 +13,7 @@ type Settings = {
   store_description: string;
   store_image: string;
   wifi_password: string;
+  instagram: string;
   accent_color: string;
 };
 
@@ -90,7 +91,7 @@ function InfoContent() {
               </div>
 
               {settings?.wifi_password && (
-                <div className="bg-[#e8dcc8] rounded-lg p-4">
+                <div className="bg-[#e8dcc8] rounded-lg p-4 mb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#3d2914] flex items-center justify-center">
                       <Wifi className="w-5 h-5 text-[#f4ecd8]" />
@@ -101,6 +102,23 @@ function InfoContent() {
                     </div>
                   </div>
                 </div>
+              )}
+
+              {settings?.instagram && (
+                <a 
+                  href={settings.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="bg-[#e8dcc8] rounded-lg p-4 mb-4 flex items-center gap-3 hover:opacity-80"
+                >
+                  <div className="w-10 h-10 rounded-full bg-[#3d2914] flex items-center justify-center">
+                    <Instagram className="w-5 h-5 text-[#f4ecd8]" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-xs text-[#8b7355] font-serif">Instagram</p>
+                    <p className="text-lg font-bold font-serif text-[#3d2914]">Takip Et</p>
+                  </div>
+                </a>
               )}
 
               <div className="mt-8 pt-4 border-t border-[#8b7355] text-center">
@@ -152,6 +170,23 @@ function InfoContent() {
               </div>
             </div>
           </div>
+        )}
+
+        {settings?.instagram && (
+          <a 
+            href={settings.instagram} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="card p-4 mt-4 flex items-center gap-3 hover:bg-zinc-800"
+          >
+            <div className="w-10 h-10 rounded-full bg-[#B33F2E]/20 flex items-center justify-center">
+              <Instagram className="w-5 h-5 text-[#B33F2E]" />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs text-zinc-500">Instagram</p>
+              <p className="text-lg font-bold text-white">Takip Et</p>
+            </div>
+          </a>
         )}
       </main>
     </div>
