@@ -1,10 +1,12 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Header from '@/components/Header';
 import { supabase } from '@/lib/supabase';
 import { Wifi } from 'lucide-react';
+
+const Header = dynamic(() => import('@/components/Header'), { ssr: false });
 
 type Settings = {
   store_name: string;

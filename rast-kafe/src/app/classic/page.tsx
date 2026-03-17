@@ -1,8 +1,10 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useState, useEffect } from 'react';
-import Header from '@/components/Header';
 import { supabase } from '@/lib/supabase';
+
+const Header = dynamic(() => import('@/components/Header'), { ssr: false });
 
 type Product = {
   id: string;
