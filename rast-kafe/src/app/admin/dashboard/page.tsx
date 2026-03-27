@@ -450,12 +450,12 @@ export default function AdminDashboard() {
             <button onClick={() => router.push('/classic')} className="p-2 hover:bg-zinc-800 rounded-full">
               <ArrowLeft className="w-5 h-5 text-zinc-400" />
             </button>
-            <h1 className="text-xl font-bold text-white">{t.title}</h1>
+            <h1 className="text-xl font-medium text-white">{t.title}</h1>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setLang(lang === 'tr' ? 'en' : 'tr')}
-              className="px-3 py-1.5 rounded-lg bg-[#B33F2E] text-white text-sm font-bold"
+              className="px-3 py-1.5 rounded-lg bg-[#B33F2E] text-white text-sm font-medium"
             >
               {t.english}
             </button>
@@ -499,13 +499,13 @@ export default function AdminDashboard() {
             <div className="flex gap-2 mb-4">
               <button
                 onClick={() => { setEditingProduct(null); setFormData({ name: '', description: '', price: '', category: categories[0] || '', image_url: '', is_available: true }); setShowModal(true); }}
-                className="flex-1 py-3 rounded-xl bg-[#B33F2E] text-white font-bold flex items-center justify-center gap-2"
+                className="flex-1 py-3 rounded-xl bg-[#B33F2E] text-white font-medium flex items-center justify-center gap-2"
               >
                 <Plus className="w-5 h-5" /> {t.addProduct}
               </button>
               <button
                 onClick={() => setShowBulkModal(true)}
-                className="flex-1 py-3 rounded-xl bg-zinc-800 text-white font-bold flex items-center justify-center gap-2"
+                className="flex-1 py-3 rounded-xl bg-zinc-800 text-white font-medium flex items-center justify-center gap-2"
               >
                 <DollarSign className="w-5 h-5" /> {t.updatePrice}
               </button>
@@ -525,10 +525,10 @@ export default function AdminDashboard() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between">
                       <div>
-                        <h3 className="font-bold text-white">{product.name}</h3>
+                        <h3 className="font-medium text-white">{product.name}</h3>
                         <p className="text-xs text-zinc-500">{product.category}</p>
                       </div>
-                      <span className="text-lg font-bold text-[#B33F2E]">₺{product.price}</span>
+                      <span className="text-lg font-medium text-[#B33F2E]">₺{product.price}</span>
                     </div>
                     
                     <div className="flex gap-2 mt-2">
@@ -561,7 +561,7 @@ export default function AdminDashboard() {
         ) : activeTab === 'categories' ? (
           <div className="space-y-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-white">{t.categories} ({categories.length})</h3>
+              <h3 className="font-medium text-white">{t.categories} ({categories.length})</h3>
               <button
                 onClick={() => setShowCategoryModal(true)}
                 className="px-4 py-2 rounded-lg bg-[#B33F2E] text-white text-sm font-medium flex items-center gap-2"
@@ -592,21 +592,21 @@ export default function AdminDashboard() {
                   <Package className="w-4 h-4 text-[#B33F2E]" />
                   <span className="text-xs text-zinc-500">{t.totalProducts}</span>
                 </div>
-                <p className="text-2xl font-bold text-white">{products.length}</p>
+                <p className="text-2xl font-medium text-white">{products.length}</p>
               </div>
               <div className="bg-zinc-900 rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertCircle className="w-4 h-4 text-red-400" />
                   <span className="text-xs text-zinc-500">{t.outOfStockProducts}</span>
                 </div>
-                <p className="text-2xl font-bold text-white">{products.filter(p => !p.is_available).length}</p>
+                <p className="text-2xl font-medium text-white">{products.filter(p => !p.is_available).length}</p>
               </div>
               <div className="bg-zinc-900 rounded-xl p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Store className="w-4 h-4 text-green-400" />
                   <span className="text-xs text-zinc-500">{t.totalCategories}</span>
                 </div>
-                <p className="text-2xl font-bold text-white">{categories.length}</p>
+                <p className="text-2xl font-medium text-white">{categories.length}</p>
               </div>
               {products.length > 0 && (() => {
                 const sorted = [...products].sort((a, b) => b.price - a.price);
@@ -616,8 +616,8 @@ export default function AdminDashboard() {
                       <TrendingUp className="w-4 h-4 text-orange-400" />
                       <span className="text-xs text-zinc-500">{t.mostExpensive}</span>
                     </div>
-                    <p className="text-sm font-bold text-white truncate">{sorted[0].name}</p>
-                    <p className="text-lg font-bold text-[#B33F2E]">₺{sorted[0].price}</p>
+                    <p className="text-sm font-medium text-white truncate">{sorted[0].name}</p>
+                    <p className="text-lg font-medium text-[#B33F2E]">₺{sorted[0].price}</p>
                   </div>
                 );
               })()}
@@ -629,15 +629,15 @@ export default function AdminDashboard() {
                       <TrendingDown className="w-4 h-4 text-blue-400" />
                       <span className="text-xs text-zinc-500">{t.cheapest}</span>
                     </div>
-                    <p className="text-sm font-bold text-white truncate">{sorted[0].name}</p>
-                    <p className="text-lg font-bold text-[#B33F2E]">₺{sorted[0].price}</p>
+                    <p className="text-sm font-medium text-white truncate">{sorted[0].name}</p>
+                    <p className="text-lg font-medium text-[#B33F2E]">₺{sorted[0].price}</p>
                   </div>
                 );
               })()}
             </div>
 
             <div className="bg-zinc-900 rounded-xl p-4">
-              <h3 className="font-bold text-white mb-3 flex items-center gap-2">
+              <h3 className="font-medium text-white mb-3 flex items-center gap-2">
                 <BarChart3 className="w-5 h-5" /> {t.categoryDistribution}
               </h3>
               <div className="space-y-2">
@@ -659,18 +659,18 @@ export default function AdminDashboard() {
             </div>
 
             <div className="bg-zinc-900 rounded-xl p-4">
-              <h3 className="font-bold text-white mb-3 flex items-center gap-2">
+              <h3 className="font-medium text-white mb-3 flex items-center gap-2">
                 <Clock className="w-5 h-5" /> {t.usageStats}
               </h3>
               <div className="grid grid-cols-3 gap-2">
                 <div className="bg-zinc-800 rounded-lg p-3 text-center">
                   <p className="text-xs text-zinc-500 mb-1">{t.today}</p>
-                  <p className="text-xl font-bold text-[#B33F2E]">{viewLogs.filter(v => v.date === new Date().toISOString().split('T')[0]).length}</p>
+                  <p className="text-xl font-medium text-[#B33F2E]">{viewLogs.filter(v => v.date === new Date().toISOString().split('T')[0]).length}</p>
                   <p className="text-xs text-zinc-600">{t.views}</p>
                 </div>
                 <div className="bg-zinc-800 rounded-lg p-3 text-center">
                   <p className="text-xs text-zinc-500 mb-1">{t.thisWeek}</p>
-                  <p className="text-xl font-bold text-[#B33F2E]">{(() => {
+                  <p className="text-xl font-medium text-[#B33F2E]">{(() => {
                     const weekStart = new Date();
                     weekStart.setDate(weekStart.getDate() - weekStart.getDay());
                     return viewLogs.filter(v => new Date(v.date) >= weekStart).length;
@@ -679,7 +679,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="bg-zinc-800 rounded-lg p-3 text-center">
                   <p className="text-xs text-zinc-500 mb-1">{t.thisMonth}</p>
-                  <p className="text-xl font-bold text-[#B33F2E]">{(() => {
+                  <p className="text-xl font-medium text-[#B33F2E]">{(() => {
                     const monthStart = new Date();
                     monthStart.setDate(1);
                     return viewLogs.filter(v => new Date(v.date) >= monthStart).length;
@@ -695,7 +695,7 @@ export default function AdminDashboard() {
         ) : (
           <div className="space-y-4">
             <div className="bg-zinc-900 rounded-xl p-4">
-              <h3 className="font-bold text-white mb-4 flex items-center gap-2">
+              <h3 className="font-medium text-white mb-4 flex items-center gap-2">
                 <Store className="w-5 h-5" /> {t.storeInfo}
               </h3>
               
@@ -786,7 +786,7 @@ export default function AdminDashboard() {
 
                 <button
                   onClick={handleSettingsSave}
-                  className="w-full py-3 rounded-xl bg-[#B33F2E] text-white font-bold"
+                  className="w-full py-3 rounded-xl bg-[#B33F2E] text-white font-medium"
                 >
                   {t.save}
                 </button>
@@ -813,7 +813,7 @@ export default function AdminDashboard() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-xl font-medium text-white">
                   {editingProduct ? t.update : t.addProduct}
                 </h2>
                 <button onClick={() => setShowModal(false)} className="p-2 hover:bg-zinc-800 rounded-full">
@@ -835,7 +835,7 @@ export default function AdminDashboard() {
                   </div>
                   <span className="text-sm text-zinc-400">{t.inStock2}</span>
                 </label>
-                <button type="submit" className="w-full py-3 rounded-xl bg-[#B33F2E] text-white font-bold">
+                <button type="submit" className="w-full py-3 rounded-xl bg-[#B33F2E] text-white font-medium">
                   {editingProduct ? t.update : t.add}
                 </button>
               </form>
@@ -858,7 +858,7 @@ export default function AdminDashboard() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-white">{t.bulkPrice}</h2>
+                <h2 className="text-xl font-medium text-white">{t.bulkPrice}</h2>
                 <button onClick={() => setShowBulkModal(false)} className="p-2 hover:bg-zinc-800 rounded-full">
                   <X className="w-5 h-5 text-zinc-400" />
                 </button>
@@ -878,7 +878,7 @@ export default function AdminDashboard() {
                   <option value={t.all} className="bg-zinc-900">{t.allCategories}</option>
                   {categories.map((cat) => (<option key={cat} value={cat} className="bg-zinc-900">{cat}</option>))}
                 </select>
-                <button type="submit" className="w-full py-3 rounded-xl bg-[#B33F2E] text-white font-bold">
+                <button type="submit" className="w-full py-3 rounded-xl bg-[#B33F2E] text-white font-medium">
                   {t.apply}
                 </button>
               </form>
@@ -901,14 +901,14 @@ export default function AdminDashboard() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-white">{t.newCategory}</h2>
+                <h2 className="text-xl font-medium text-white">{t.newCategory}</h2>
                 <button onClick={() => setShowCategoryModal(false)} className="p-2 hover:bg-zinc-800 rounded-full">
                   <X className="w-5 h-5 text-zinc-400" />
                 </button>
               </div>
               <form onSubmit={(e) => { e.preventDefault(); handleAddCategory(); }} className="space-y-3">
                 <input type="text" placeholder={t.categoryName} value={newCategory} onChange={(e) => setNewCategory(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-zinc-800 border border-zinc-700 text-white" required />
-                <button type="submit" className="w-full py-3 rounded-xl bg-[#B33F2E] text-white font-bold">
+                <button type="submit" className="w-full py-3 rounded-xl bg-[#B33F2E] text-white font-medium">
                   {t.add}
                 </button>
               </form>
