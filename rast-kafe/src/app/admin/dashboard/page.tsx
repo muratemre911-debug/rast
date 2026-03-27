@@ -468,25 +468,25 @@ export default function AdminDashboard() {
         <div className="flex px-4 pb-3 gap-1.5 justify-center">
           <button
             onClick={() => setActiveTab('products')}
-            className={`px-3 py-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 ${activeTab === 'products' ? 'bg-[#B33F2E] text-white' : 'bg-zinc-800 text-zinc-400'}`}
+            className={`px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 ${activeTab === 'products' ? 'bg-[#B33F2E] text-white' : 'bg-zinc-800 text-zinc-400'}`}
           >
             <Package className="w-3.5 h-3.5" /> {t.products}
           </button>
           <button
             onClick={() => setActiveTab('categories')}
-            className={`px-3 py-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 ${activeTab === 'categories' ? 'bg-[#B33F2E] text-white' : 'bg-zinc-800 text-zinc-400'}`}
+            className={`px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 ${activeTab === 'categories' ? 'bg-[#B33F2E] text-white' : 'bg-zinc-800 text-zinc-400'}`}
           >
             <Store className="w-3.5 h-3.5" /> {t.categories}
           </button>
           <button
             onClick={() => setActiveTab('settings')}
-            className={`px-3 py-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 ${activeTab === 'settings' ? 'bg-[#B33F2E] text-white' : 'bg-zinc-800 text-zinc-400'}`}
+            className={`px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 ${activeTab === 'settings' ? 'bg-[#B33F2E] text-white' : 'bg-zinc-800 text-zinc-400'}`}
           >
             <Settings className="w-3.5 h-3.5" /> {t.settings}
           </button>
           <button
             onClick={() => setActiveTab('analytics')}
-            className={`px-3 py-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 ${activeTab === 'analytics' ? 'bg-[#B33F2E] text-white' : 'bg-zinc-800 text-zinc-400'}`}
+            className={`px-3 py-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 ${activeTab === 'analytics' ? 'bg-[#B33F2E] text-white' : 'bg-zinc-800 text-zinc-400'}`}
           >
             <BarChart3 className="w-3.5 h-3.5" /> {t.analytics}
           </button>
