@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { Info } from 'lucide-react';
+import { Info, Globe } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
 export default function Header() {
@@ -15,6 +15,7 @@ export default function Header() {
   const isInfo = pathname.includes('/info');
 
   const [showMenuToggle, setShowMenuToggle] = useState(true);
+  const [language, setLanguage] = useState('tr');
 
   useEffect(() => {
     fetchSettings();
@@ -25,15 +26,32 @@ export default function Header() {
       if (supabase.client) {
         const { data } = await supabase.client
           .from('settings')
-          .select('show_menu_toggle')
+          .select('show_menu_toggle, language')
           .eq('id', 'store_info')
           .single();
         
-        if (data) setShowMenuToggle(data.show_menu_toggle ?? true);
+        if (data) {
+          setShowMenuToggle(data.show_menu_toggle ?? true);
+          setLanguage(data.language || 'tr');
+        }
       }
     } catch (error) {
-      // default to true
+      // default values
     }
+  };
+
+  const toggleLanguage = async () => {
+    const newLang = language === 'tr' ? 'en' : 'tr';
+    setLanguage(newLang);
+    
+    if (supabase.client) {
+      await supabase.client.from('settings').update({
+        language: newLang,
+        updated_at: new Date().toISOString(),
+      }).eq('id', 'store_info');
+    }
+    
+    router.refresh();
   };
 
   const handleInfoClick = () => {
@@ -83,20 +101,12 @@ export default function Header() {
           
           <div className="flex items-center gap-2">
             {showMenuToggle && (
-              <>
-                <button
-                  onClick={handleInfoClick}
-                  className="p-2 rounded-full bg-[#333] text-white hover:bg-[#444] border border-[#444]"
-                >
-                  <Info className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={() => router.push('/classic')}
-                  className="px-4 py-2 rounded-full text-sm font-medium bg-[#333] text-white hover:bg-[#444] border border-[#444]"
-                >
-                  Klasik Menü ▸
-                </button>
-              </>
+              <button
+                onClick={handleInfoClick}
+                className="p-2 rounded-full bg-[#333] text-white hover:bg-[#444] border border-[#444]"
+              >
+                <Info className="w-5 h-5" />
+              </button>
             )}
           </div>
         </div>

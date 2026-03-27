@@ -14,18 +14,45 @@ type Product = {
   category: string;
   image_url: string;
   is_available: boolean;
+  created_at?: string;
 };
 
-const categories = ['Tümü', 'Sıcak Kahve', 'Demleme Kahve', 'Soğuk Kahve', 'Sütlü Sıcak', 'Sütlü Soğuk', 'Demleme Siyah Çay', 'Bitki Çayı', 'Taze Meyve Suyu', 'Maden Suyu', 'Meşrubat', 'El Yapımı Tatlılar', 'Tost', 'Sandviç'];
+type Settings = {
+  menu_title: string;
+  welcome_text: string;
+  footer_text: string;
+  store_name: string;
+  categories: string[];
+};
+
+const defaultCategories = ['Tümü', 'Sıcak Kahve', 'Demleme Kahve', 'Soğuk Kahve', 'Sütlü Sıcak', 'Sütlü Soğuk', 'Demleme Siyah Çay', 'Bitki Çayı', 'Taze Meyve Suyu', 'Maden Suyu', 'Meşrubat', 'El Yapımı Tatlılar', 'Tost', 'Sandviç'];
 
 export default function ClassicPage() {
   const [selectedCategory, setSelectedCategory] = useState('Tümü');
   const [products, setProducts] = useState<Product[]>([]);
+  const [settings, setSettings] = useState<Settings>({
+    menu_title: 'Menümüz',
+    welcome_text: 'Rastgeldiniz…',
+    footer_text: 'Afiyet olsun…',
+    store_name: 'RAST Kafe',
+    categories: defaultCategories,
+  });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const trackView = async () => {
+    if (supabase.client) {
+      const now = new Date();
+      const dayKey = now.toISOString().split('T')[0];
+      const viewData = {
+        date: dayKey,
+        timestamp: now.toISOString(),
+        path: '/classic',
+      };
+      try {
+        await supabase.client.from('view_logs').insert(viewData);
+      } catch (e) {}
+    }
+  };
 
   const fetchProducts = async () => {
     try {
@@ -42,6 +69,40 @@ export default function ClassicPage() {
     setLoading(false);
   };
 
+  const fetchSettings = async () => {
+    try {
+      if (supabase.client) {
+        const { data } = await supabase.client
+          .from('settings')
+          .select('menu_title, welcome_text, footer_text, store_name, categories')
+          .eq('id', 'store_info')
+          .single();
+        
+        if (data) {
+          setSettings({
+            menu_title: data.menu_title || 'Menümüz',
+            welcome_text: data.welcome_text || 'Rastgeldiniz…',
+            footer_text: data.footer_text || 'Afiyet olsun…',
+            store_name: data.store_name || 'RAST Kafe',
+            categories: data.categories?.length ? ['Tümü', ...data.categories] : defaultCategories,
+          });
+          if (data.categories?.length) {
+            setSelectedCategory('Tümü');
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+    fetchSettings();
+    trackView();
+  }, []);
+
+  const categories = settings.categories;
   const filteredProducts = products.filter(product => {
     return selectedCategory === 'Tümü' || product.category === selectedCategory;
   });
@@ -77,8 +138,8 @@ export default function ClassicPage() {
         <div className="max-w-2xl mx-auto border-[12px] border-[#5c4a32] rounded-lg shadow-2xl bg-[#f4ecd8]">
           <div className="p-6">
             <div className="text-center mb-8 pb-4 border-b-2 border-[#8b7355]">
-              <h2 className="text-3xl font-serif text-[#3d2914] tracking-widest uppercase">Menümüz</h2>
-              <p className="text-[#8b7355] font-serif italic mt-2">Rastgeldiniz...</p>
+              <h2 className="text-3xl font-serif text-[#3d2914] tracking-widest uppercase">{settings.menu_title}</h2>
+              <p className="text-[#8b7355] font-serif italic mt-2">{settings.welcome_text}</p>
             </div>
 
             <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
@@ -143,10 +204,10 @@ export default function ClassicPage() {
 
             <div className="mt-12 pt-4 border-t border-[#8b7355] text-center">
               <p className="font-serif text-[#8b7355] text-sm italic">
-                Afiyet olsun...
+                {settings.footer_text}
               </p>
               <p className="font-serif text-[#8b7355] text-xs mt-2">
-                RAST Kafe • Rastgeldiniz...
+                {settings.store_name}
               </p>
             </div>
           </div>

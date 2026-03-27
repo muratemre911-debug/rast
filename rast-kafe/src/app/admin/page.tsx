@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -86,9 +87,9 @@ export default function AdminLogin() {
         </form>
 
         <div className="mt-6 text-center">
-          <a href="/" className="text-zinc-500 hover:text-zinc-300 text-sm">
+          <Link href="/" className="text-zinc-500 hover:text-zinc-300 text-sm">
             ← Menüye Dön
-          </a>
+          </Link>
         </div>
       </motion.div>
     </div>
